@@ -6,7 +6,7 @@ class NavBar extends Component {
         return ( 
             <nav class="navbar navbar-light bg-light">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#">Navbar</a>
+                    <a class="navbar-brand" href="#">Sort Visualizer</a>
                 </div>
                 <span className="badge badge-pill badge-secondary">
                 </span>
