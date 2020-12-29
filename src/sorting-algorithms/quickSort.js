@@ -1,17 +1,31 @@
-const quickSort = (arry = []) => {
-    if (arry.length === 0)
-        return [];
-    let left = [], right =[], pivot = arry[0];
-    for (let i=1; i< arry.length; i++) {
-        if(arry[i] < pivot)
-            left.push(arry[i]);
-        else
-            right.push(arry[i]);
-    };
+function partition(arr, start, end) {
+	// Taking the last element as the pivot
+	const pivotValue = arr[end];
+	let pivotIndex = start;
+	for (let i = start; i < end; i++) {
+		if (arr[i] < pivotValue) {
+			// Swapping elements
+			[arr[i], arr[pivotIndex]] = [arr[pivotIndex], arr[i]];
+			// Moving to next element
+			pivotIndex++;
+		}
+	}
 
-    return [...quickSort(left), pivot, ...quickSort(right)];
+	// Putting the pivot value in the middle
+	[arr[pivotIndex], arr[end]] = [arr[end], arr[pivotIndex]];
+	return pivotIndex;
 }
 
-//Example Usage:
-// let myArray = [2, 4, 1, 6, -7, 8, 5, 9, 3, 4];
-// console.log(quickSort(myArray));
+function quickSort(arr, start, end) {
+	// Base case or terminating case
+	if (start >= end) {
+		return;
+	}
+
+	// Returns pivotIndex
+	let index = partition(arr, start, end);
+
+	// Recursively apply the same logic to the left and right subarrays
+	quickSort(arr, start, index - 1);
+	quickSort(arr, index + 1, end);
+}

@@ -3,10 +3,26 @@ import '../.././App.css';
 
 import './SortingVisualizer.css';
 import Rect from '../Rect/Rect';
-import { getBubbleSortProcedures } from '../../sorting-algorithms/bubbleSortTest.js';
+import {
+	getBubbleProcedure,
+	bubbleAnimate,
+} from '../../sorting-algorithms/bubbleSort.js';
+
+import {
+	getSelectionProcedure,
+	selectionAnimate,
+} from '../../sorting-algorithms/selectionSort.js';
 
 const SPEED = 500;
 const NUM_OF_BARS = 12;
+
+const COLORS = {
+	PRIMARY: 'green',
+	VISITED: 'black',
+	SWAPPED: 'purple',
+	SORTED: 'blue',
+	FLAGGED: 'red',
+};
 
 class SortingVisualizer extends React.Component {
 	constructor(props) {
@@ -25,7 +41,7 @@ class SortingVisualizer extends React.Component {
 		let arr = [];
 
 		for (let i = 1; i <= NUM_OF_BARS; i++) {
-			arr.push(Math.floor(Math.random() * 500 + 50)); // [50, 500]
+			arr.push(Math.floor(Math.random() * 450 + 50)); // [50, 500]
 		}
 
 		this.setState({ arr });
@@ -49,46 +65,14 @@ class SortingVisualizer extends React.Component {
 
 	bubble() {
 		let { arr } = this.state;
-		let procedures = getBubbleSortProcedures(arr);
-		const sleep = (milliseconds) => {
-			return new Promise((resolve) => setTimeout(resolve, milliseconds));
-		};
+		let procedure = getBubbleProcedure(arr);
+		bubbleAnimate(procedure, this.swapRects, SPEED, COLORS);
+	}
 
-		let time = SPEED;
-		for (let i = 0; i < procedures.length; i++) {
-			let a = procedures[i].index1;
-			let b = procedures[i].index2;
-
-			if (procedures[i].operation === 'swap') {
-				setTimeout(() => {
-					document.getElementById(`rect-${a}`).style.backgroundColor = 'purple';
-					document.getElementById(`rect-${b}`).style.backgroundColor = 'purple';
-				}, time);
-
-				time += SPEED;
-				setTimeout(() => {
-					this.swapRects(a, b);
-					sleep(SPEED);
-				}, time);
-
-				time += SPEED;
-				setTimeout(() => {
-					document.getElementById(`rect-${a}`).style.backgroundColor = 'green';
-					document.getElementById(`rect-${b}`).style.backgroundColor = 'green';
-				}, time);
-			} else {
-				setTimeout(() => {
-					document.getElementById(`rect-${a}`).style.backgroundColor = 'black';
-					document.getElementById(`rect-${b}`).style.backgroundColor = 'black';
-				}, time);
-
-				time += SPEED;
-				setTimeout(() => {
-					document.getElementById(`rect-${a}`).style.backgroundColor = 'green';
-					document.getElementById(`rect-${b}`).style.backgroundColor = 'green';
-				}, time);
-			}
-		}
+	selection() {
+		let { arr } = this.state;
+		let procedure = getSelectionProcedure(arr);
+		selectionAnimate(procedure, this.swapRects, SPEED, COLORS);
 	}
 
 	render() {
@@ -110,6 +94,7 @@ class SortingVisualizer extends React.Component {
 				))}
 				<button onClick={() => this.resetArr()}>randomize</button>
 				<button onClick={() => this.bubble()}>bubble sort</button>
+				<button onClick={() => this.selection()}>selection sort</button>
 			</div>
 		);
 	}

@@ -1,39 +1,71 @@
-let procedures = [];
+function getBubbleProcedure(arr) {
+	let auxArr = arr;
+	let procedure = [];
 
-let bubbleSort = (arr) => {
-	for (let i = 0; i < arr.length - 1; i++) {
-		for (let j = i + 1; j < arr.length; j++) {
-			let first = arr[i];
-			let second = arr[j];
+	for (let i = 0; i < auxArr.length - 1; i++) {
+		for (let j = i + 1; j < auxArr.length; j++) {
+			let first = auxArr[i];
+			let second = auxArr[j];
 
-			procedures.push({
-				operation: 'color',
+			procedure.push({
+				operation: 'visit',
 				index1: i,
 				index2: j,
 			});
 
 			if (second < first) {
-				procedures.push({
+				procedure.push({
 					operation: 'swap',
 					index1: i,
 					index2: j,
 				});
 
-				arr[i] = second;
-				arr[j] = first;
+				auxArr[i] = second;
+				auxArr[j] = first;
 			}
 		}
 	}
-	return procedures;
-};
 
-/*
-let list = [9, 4, 2, 7, 2, 8, 1];
-console.log(list + '\n');
-let sorted = bubbleSort(list);
-console.log(sorted + '\n');
-
-for (let i = 0; i < procedures.length; i++) {
-	console.log(procedures[i].operation + '\n');
+	return procedure;
 }
-*/
+
+function bubbleAnimate(procedure, swapRects, SPEED, COLORS) {
+	let time = SPEED;
+	for (let i = 0; i < procedure.length; i++) {
+		let a = procedure[i].index1;
+		let b = procedure[i].index2;
+		let idA = `rect-${a}`;
+		let idB = `rect-${b}`;
+
+		if (procedure[i].operation === 'swap') {
+			setTimeout(() => {
+				document.getElementById(idA).style.backgroundColor = COLORS['SWAPPED'];
+				document.getElementById(idB).style.backgroundColor = COLORS['SWAPPED'];
+			}, time);
+
+			time += SPEED;
+			setTimeout(() => {
+				swapRects(a, b);
+			}, time);
+
+			time += SPEED;
+			setTimeout(() => {
+				document.getElementById(idA).style.backgroundColor = COLORS['PRIMARY'];
+				document.getElementById(idB).style.backgroundColor = COLORS['PRIMARY'];
+			}, time);
+		} else {
+			setTimeout(() => {
+				document.getElementById(idA).style.backgroundColor = COLORS['VISITED'];
+				document.getElementById(idB).style.backgroundColor = COLORS['VISITED'];
+			}, time);
+
+			time += SPEED;
+			setTimeout(() => {
+				document.getElementById(idA).style.backgroundColor = COLORS['PRIMARY'];
+				document.getElementById(idB).style.backgroundColor = COLORS['PRIMARY'];
+			}, time);
+		}
+	}
+}
+
+export { getBubbleProcedure, bubbleAnimate };

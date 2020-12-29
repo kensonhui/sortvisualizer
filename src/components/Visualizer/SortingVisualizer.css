@@ -10,3 +10,9 @@
 	position: absolute;
 	width: 50px;
 }
+
+.flagged {
+	background-color: pink;
+	color: pink;
+	background: pink;
+}
