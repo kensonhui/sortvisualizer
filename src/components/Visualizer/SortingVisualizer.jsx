@@ -80,12 +80,12 @@ class SortingVisualizer extends React.Component {
 	insertion() {
 		let { arr } = this.state;
 		let procedure = getInsertionProcedure(arr);
-		console.log(getInsertionProcedure(arr));
 		selectionAnimate(procedure, this.swapRects, SPEED, COLORS);
 	}
 
 	merge() {
-		
+		let { arr } = this.state;
+		let procedure = getInsertionProcedure(arr);
 	}
 
 	render() {
