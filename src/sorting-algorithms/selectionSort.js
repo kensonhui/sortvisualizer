@@ -37,7 +37,6 @@ function getSelectionProcedure(arr) {
 }
 
 let selectionAnimate = (procedure, swapRects, SPEED, COLORS) => {
-	console.log(procedure);
 	let time = SPEED;
 	for (let i = 0; i < procedure.length; i++) {
 		let a = procedure[i].index1;
