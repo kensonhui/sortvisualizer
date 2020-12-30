@@ -14,9 +14,10 @@ import {
 } from '../../sorting-algorithms/selectionSort.js';
 
 import { getInsertionProcedure } from '../../sorting-algorithms/insertionSort.js';
+import { getBogoProcedure } from '../../sorting-algorithms/bogoSort';
 
 const SPEED = 500;
-const NUM_OF_BARS = 12;
+let NUM_OF_BARS = 12;
 
 const COLORS = {
 	PRIMARY: 'green',
@@ -88,6 +89,24 @@ class SortingVisualizer extends React.Component {
 		let procedure = getInsertionProcedure(arr);
 	}
 
+	bogo () {
+		NUM_OF_BARS = 4;
+		let arr = [];
+
+		for (let i = 1; i <= NUM_OF_BARS; i++) {
+			arr.push(Math.floor(Math.random() * 450 + 50)); // [50, 500]
+		}
+
+		this.setState({ arr }, function() {
+			let { arr } = this.state;
+			let procedure = getBogoProcedure(arr);
+			selectionAnimate(procedure, this.swapRects, SPEED, COLORS);
+		})
+		
+		
+	}
+
+
 	render() {
 		let { arr } = this.state;
 
@@ -109,6 +128,7 @@ class SortingVisualizer extends React.Component {
 				<button onClick={() => this.bubble()}>bubble sort</button>
 				<button onClick={() => this.selection()}>selection sort</button>
 				<button onClick={() => this.insertion()}>insertion sort</button>
+				<button onClick={() => this.bogo()}>bogo sort</button>
 			</div>
 		);
 	}
