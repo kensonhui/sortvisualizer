@@ -1,4 +1,4 @@
-function getInnsertionProcedure(arr) {
+function getInsertionProcedure(arr) {
   let auxArr = arr;
   let procedure = [];
 
@@ -40,4 +40,4 @@ function getInnsertionProcedure(arr) {
 // let myArray = [2, 4, 1, 6, -7, 8, 5, 9, 3, 4];
 // console.log(insertionSort(myArray));
 
-export { getInnsertionProcedure };
+export { getInsertionProcedure };

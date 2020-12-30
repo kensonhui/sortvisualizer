@@ -13,7 +13,7 @@ import {
 	selectionAnimate,
 } from '../../sorting-algorithms/selectionSort.js';
 
-import { getInnsertionProcedure } from '../../sorting-algorithms/insertionSort.js';
+import { getInsertionProcedure } from '../../sorting-algorithms/insertionSort.js';
 
 const SPEED = 500;
 const NUM_OF_BARS = 12;
@@ -79,9 +79,13 @@ class SortingVisualizer extends React.Component {
 
 	insertion() {
 		let { arr } = this.state;
-		let procedure = getInnsertionProcedure(arr);
-		console.log(getInnsertionProcedure(arr));
+		let procedure = getInsertionProcedure(arr);
+		console.log(getInsertionProcedure(arr));
 		selectionAnimate(procedure, this.swapRects, SPEED, COLORS);
+	}
+
+	merge() {
+		
 	}
 
 	render() {
