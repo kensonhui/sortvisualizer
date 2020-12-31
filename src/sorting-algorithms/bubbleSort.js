@@ -25,7 +25,6 @@ function getBubbleProcedure(arr) {
 			}
 		}
 	}
-
 	return procedure;
 }
 
