@@ -30,6 +30,11 @@ function getBogoProcedure(array) {
 
     outer: while (unsorted) {
         for (var i = 0; i < auxArr.length - 1; i++) {
+            procedure.push({
+                operation: 'visit',
+                index1: i,
+                index2: i + 1
+            });
             if (auxArr[i] > auxArr[i + 1]) {
                 shuffled = shuffle(auxArr);
                 procedure = procedure.concat(shuffled[1]);
@@ -45,4 +50,68 @@ function getBogoProcedure(array) {
 
 }
 
-export { getBogoProcedure };
+let sortAnimate = (procedure, swapRects, SPEED, COLORS, audioPlayer) => {
+	let time = SPEED;
+	for (let i = 0; i < procedure.length; i++) {
+		let a = procedure[i].index1;
+		let b = procedure[i].index2;
+		let idA = `rect-${a}`;
+        let idB = `rect-${b}`;
+        let rectA = document.getElementById(idA);
+        let rectB = document.getElementById(idB);
+        
+		if (procedure[i].operation === 'swap') {
+			setTimeout(() => {
+				rectA.style.backgroundColor = COLORS['SWAPPED'];
+                rectB.style.backgroundColor = COLORS['SWAPPED'];
+			}, time);
+
+			time += SPEED;
+			setTimeout(() => {
+                swapRects(a, b);
+                audioPlayer.playNote(Number((rectB.style.height.slice(0, -2)) - 50)/450 * 80 + 30);
+			}, time);
+
+			time += SPEED;
+			setTimeout(() => {
+				// order matters
+				rectB.style.backgroundColor = COLORS['PRIMARY'];
+                document.getElementById(idA).style.backgroundColor = COLORS['SORTED'];
+			}, time);
+		} else if (procedure[i].operation === 'flag') {
+			setTimeout(() => {
+				let x = document.getElementsByClassName('flagged');
+
+				while (x.length) {
+					if (x[0].style.backgroundColor != COLORS['SORTED']) {
+						x[0].style.backgroundColor = COLORS['PRIMARY'];
+					}
+
+					x[0].classList.remove('flagged');
+				}
+
+				let c = procedure[i].index;
+				let idC = `rect-${c}`;
+
+				document.getElementById(idC).classList.add('flagged');
+				document.getElementById(idC).style.backgroundColor = 'pink';
+			}, time);
+
+			time += SPEED;
+		} else {
+			setTimeout(() => {
+				document.getElementById(idA).style.backgroundColor = COLORS['VISITED'];
+                rectB.style.backgroundColor = COLORS['VISITED'];
+                audioPlayer.playNote(Number((rectB.style.height.slice(0, -2)) - 50)/450 * 80 + 30);
+			}, time);
+
+			time += SPEED;
+			setTimeout(() => {
+				// exploit selection sort
+				rectB.style.backgroundColor = COLORS['PRIMARY'];
+			}, time);
+		}
+	}
+};
+
+export { getBogoProcedure, sortAnimate };

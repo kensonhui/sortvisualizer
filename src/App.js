@@ -1,5 +1,5 @@
 import './App.css';
-import NavBar from './components/NavBar/NavBar';
+import NavBar from './components/Navbar/NavBar';
 import SortingVisualizer from './components/Visualizer/SortingVisualizer';
 
 function App() {

@@ -14,8 +14,12 @@ import {
 } from '../../sorting-algorithms/selectionSort.js';
 
 import { getInsertionProcedure } from '../../sorting-algorithms/insertionSort.js';
-import { getBogoProcedure } from '../../sorting-algorithms/bogoSort';
+import { getBogoProcedure, sortAnimate } from '../../sorting-algorithms/bogoSort';
 
+import AudioPlayer from "./AudioPlayer";
+
+
+const audioPlayer = AudioPlayer();
 const SPEED = 500;
 let NUM_OF_BARS = 12;
 
@@ -32,8 +36,9 @@ class SortingVisualizer extends React.Component {
 		super(props);
 
 		this.state = {
-			arr: [],
+			arr: []
 		};
+		audioPlayer.setInstrument("acoustic_grand_piano");
 	}
 
 	componentDidMount() {
@@ -75,7 +80,7 @@ class SortingVisualizer extends React.Component {
 	selection() {
 		let { arr } = this.state;
 		let procedure = getSelectionProcedure(arr);
-		selectionAnimate(procedure, this.swapRects, SPEED, COLORS);
+		sortAnimate(procedure, this.swapRects, 150, COLORS, audioPlayer);
 	}
 
 	insertion() {
@@ -100,10 +105,17 @@ class SortingVisualizer extends React.Component {
 		this.setState({ arr }, function() {
 			let { arr } = this.state;
 			let procedure = getBogoProcedure(arr);
-			selectionAnimate(procedure, this.swapRects, SPEED, COLORS);
+			sortAnimate(procedure, this.swapRects, SPEED, COLORS, audioPlayer);
 		})
 		
 		
+	}
+
+
+	handleClick = () => {
+		
+		audioPlayer.playNote(100);
+		console.log("Went through");
 	}
 
 
@@ -124,11 +136,14 @@ class SortingVisualizer extends React.Component {
 				{arr.map((v, i) => (
 					<Rect value={v} key={newGUID()} myKey={i}></Rect>
 				))}
+				
+
 				<button onClick={() => this.resetArr()}>randomize</button>
 				<button onClick={() => this.bubble()}>bubble sort</button>
 				<button onClick={() => this.selection()}>selection sort</button>
 				<button onClick={() => this.insertion()}>insertion sort</button>
 				<button onClick={() => this.bogo()}>bogo sort</button>
+				<button onClick={this.handleClick}>Play</button>
 			</div>
 		);
 	}
