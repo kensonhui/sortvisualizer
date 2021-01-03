@@ -50,7 +50,9 @@ function getBogoProcedure(array) {
 
 }
 
-let sortAnimate = (procedure, swapRects, SPEED, COLORS, audioPlayer) => {
+
+
+let sortAnimate = (procedure, swapRects, SPEED, COLORS, audioPlayer, min = 50, max = 500) => {
 	let time = SPEED;
 	for (let i = 0; i < procedure.length; i++) {
 		let a = procedure[i].index1;
@@ -59,6 +61,8 @@ let sortAnimate = (procedure, swapRects, SPEED, COLORS, audioPlayer) => {
         let idB = `rect-${b}`;
         let rectA = document.getElementById(idA);
         let rectB = document.getElementById(idB);
+        //let note = (Number((rectB.style.height.slice(0, -2)) - min)/(max - min) * 85 + 21);
+        
         
 		if (procedure[i].operation === 'swap') {
 			setTimeout(() => {
@@ -69,7 +73,7 @@ let sortAnimate = (procedure, swapRects, SPEED, COLORS, audioPlayer) => {
 			time += SPEED;
 			setTimeout(() => {
                 swapRects(a, b);
-                audioPlayer.playNote(Number((rectB.style.height.slice(0, -2)) - 50)/450 * 80 + 30);
+                audioPlayer.playNote(Number((rectB.style.height.slice(0, -2)) - min)/(max - min) * 85 + 21);
 			}, time);
 
 			time += SPEED;
@@ -102,7 +106,7 @@ let sortAnimate = (procedure, swapRects, SPEED, COLORS, audioPlayer) => {
 			setTimeout(() => {
 				document.getElementById(idA).style.backgroundColor = COLORS['VISITED'];
                 rectB.style.backgroundColor = COLORS['VISITED'];
-                audioPlayer.playNote(Number((rectB.style.height.slice(0, -2)) - 50)/450 * 80 + 30);
+                audioPlayer.playNote(Number((rectB.style.height.slice(0, -2)) - min)/(max - min) * 85 + 21);
 			}, time);
 
 			time += SPEED;

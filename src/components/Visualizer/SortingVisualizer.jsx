@@ -80,13 +80,17 @@ class SortingVisualizer extends React.Component {
 	selection() {
 		let { arr } = this.state;
 		let procedure = getSelectionProcedure(arr);
-		sortAnimate(procedure, this.swapRects, 150, COLORS, audioPlayer);
+		let min = Math.min.apply(null, arr);
+		let max = Math.max.apply(null, arr);
+		sortAnimate(procedure, this.swapRects, 250, COLORS, audioPlayer, min, max);
 	}
 
 	insertion() {
 		let { arr } = this.state;
 		let procedure = getInsertionProcedure(arr);
-		selectionAnimate(procedure, this.swapRects, SPEED, COLORS);
+		let min = Math.min.apply(null, arr);
+		let max = Math.max.apply(null, arr);
+		sortAnimate(procedure, this.swapRects, SPEED, COLORS, audioPlayer, min, max);
 	}
 
 	merge() {
@@ -97,6 +101,7 @@ class SortingVisualizer extends React.Component {
 	bogo () {
 		NUM_OF_BARS = 4;
 		let arr = [];
+		
 
 		for (let i = 1; i <= NUM_OF_BARS; i++) {
 			arr.push(Math.floor(Math.random() * 450 + 50)); // [50, 500]
@@ -104,18 +109,30 @@ class SortingVisualizer extends React.Component {
 
 		this.setState({ arr }, function() {
 			let { arr } = this.state;
+			let min = Math.min.apply(null, arr);
+			let max = Math.max.apply(null, arr);
 			let procedure = getBogoProcedure(arr);
-			sortAnimate(procedure, this.swapRects, SPEED, COLORS, audioPlayer);
+			sortAnimate(procedure, this.swapRects, SPEED, COLORS, audioPlayer, min, max);
 		})
 		
 		
 	}
 
+// temporary function to test sleep, and scales
+	handleClick = async () => {
+		let time = 0;
 
-	handleClick = () => {
-		
-		audioPlayer.playNote(100);
-		console.log("Went through");
+		// notes is the number of halfsteps above the key
+		let notes = [0, 2, 4, 7, 9, 12];
+
+		//minimum midi key is 21: which is A, and 22 is A#, 23 is B
+		let key = 24;
+
+		const sleep = (milliseconds) => {
+			return new Promise(resolve => setTimeout(resolve, milliseconds))
+		}
+
+		audioPlayer.setKey(key, notes);
 	}
 
 
@@ -143,7 +160,7 @@ class SortingVisualizer extends React.Component {
 				<button onClick={() => this.selection()}>selection sort</button>
 				<button onClick={() => this.insertion()}>insertion sort</button>
 				<button onClick={() => this.bogo()}>bogo sort</button>
-				<button onClick={this.handleClick}>Play</button>
+				<button onClick={this.handleClick}>Set to Pentatonic, A major</button>
 			</div>
 		);
 	}
