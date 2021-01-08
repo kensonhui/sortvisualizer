@@ -1,0 +1,11 @@
+.sort-bar p {
+	color: white;
+	text-align: center;
+	font-size: 1.5em;
+}
+
+.flagged {
+	color: pink;
+	background-color: pink;
+	background: pink;
+}

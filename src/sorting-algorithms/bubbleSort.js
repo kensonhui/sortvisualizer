@@ -28,7 +28,10 @@ function getBubbleProcedure(arr) {
 	return procedure;
 }
 
-function bubbleAnimate(procedure, swapRects, SPEED, COLORS) {
+function bubbleAnimate(procedure, swapRects, SPEED, COLORS, stop) {
+	/*if (stop){
+		return;
+	}*/
 	let time = SPEED;
 	for (let i = 0; i < procedure.length; i++) {
 		let a = procedure[i].index1;

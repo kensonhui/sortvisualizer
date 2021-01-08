@@ -5,7 +5,14 @@
 	height: calc(500px + 100px);
 	outline: solid;
 }
-
+.sort-container2 {
+	position: relative;
+	left: 100px;
+	top: 601px;
+	width: calc(52px * 12);
+	height: calc(500px + 100px);
+	outline: solid;
+}
 .sort-bar {
 	position: absolute;
 	width: 50px;
